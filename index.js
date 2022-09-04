@@ -2,6 +2,8 @@
 /* 🚀🚀🚀🤓 Task 1: 🤓🚀🚀🚀 
 Study the code below and explain in your own words why nested function can access the variable internal. */
 
+const { Scope } = require("@babel/traverse");
+
 const external = "I'm outside the function";
 
 function myFunction() {
@@ -11,12 +13,12 @@ function myFunction() {
   function nestedFunction() {
     console.log(internal);
   }
-  nestedFunction();
+nestedFunction();
 }
 //myFunction();
 
 //🚀🚀🚀 ⬇️ 📝 Explanation ⬇️ 📝 🚀🚀🚀: 
-
+// nestedFunction does not have gloabl Scope, and is only within myFunction. The internal variable only lies within myFunction and cannot be accsessed outside of it.
 
 
 
@@ -30,9 +32,13 @@ function myFunction() {
 💡 NOTE: you may use a for loop for this function if you wish 
 */
 
-function summation(/*Your Code Here*/) {
-  /*Your Code Here*/
 
+function summation(number) {
+  let count = 0;
+  for(let i = 1; i <= number; i++){
+  count = count + i;
+  } 
+return count;
   }
  
 
@@ -60,8 +66,12 @@ const zooAnimals = [
   💡 NOTE: the array returned should be an array of strings, and each string should follow this pattern: "name: {name}, scientific: {scientific name}"
   */
 
-  function animalNames(/*Your Code Here*/){
-    /*Your Code Here*/
+  function animalNames(zooAnimals){
+    const displayNames = [];
+    zooAnimals.forEach((animal) => {
+      displayNames.push(`name: ${animal.animal_name}, scientific: ${animal.scientific_name}`)
+    })
+    return displayNames;
   }
   
 
@@ -75,9 +85,10 @@ const zooAnimals = [
   💡 NOTE: Do some research for other methods that can help help you
   */
 
-  function lowerCaseNames(/*Your Code Here*/){
-    /*Your Code Here*/
-  }
+  function lowerCaseNames(zooAnimals){
+const lowercase = zooAnimals.map(animal => animal.animal_name.toLowerCase())
+  return lowercase;
+} 
   
   
   /* 🦁🦁🦁 Request 3: .filter() 🦁🦁🦁
@@ -88,8 +99,11 @@ const zooAnimals = [
   3. Return this new array
   */
 
-  function lowPopulationAnimals(/*Your Code Here*/){
-    /*Your Code Here*/
+  function lowPopulationAnimals(zooAnimals){
+    const lowPopulation = zooAnimals.filter(function(animal){
+      return animal.population < 5;
+    })
+    return lowPopulation;
   }
   
 
@@ -102,9 +116,12 @@ const zooAnimals = [
   💡 NOTE: Remember the reduce method takes two arguments: a callback (which itself takes two args - the accumulator and the item), and an initial value for the count. Check MDN/W3Schools for syntax!
   */
 
-  function USApop(/*Your Code Here*/){
-    /*Your Code Here*/
-  }
+  function USApop(zooAnimals){
+    const totalPopulation = zooAnimals.reduce(function(acc, animal) {
+      return acc + animal.population;
+    },0)
+  return totalPopulation
+}
   
   
   // 🦁🦁🦁 Callbacks 🦁🦁🦁  
@@ -116,8 +133,8 @@ const zooAnimals = [
     💡 NOTE: The tests for 'consume' will pass if it is created correctly and also after you correctly complete the functions 'add' and 'greeting' below in Step 2.
   */
 
-  function consume(/*Your Code Here */){
-    /*Your Code Here */
+  function consume(a, b, cb){
+    return cb(a, b)
   }
  
   
@@ -128,8 +145,8 @@ const zooAnimals = [
  2. Return the sum of those numbers
  */
 
-function add(/*Your Code Here */){
-    /*Your Code Here*/
+function add(a, b){
+    return a + b;
   }
 
 
@@ -138,8 +155,8 @@ function add(/*Your Code Here */){
 2. Return the product of those numbers
 */
 
-function multiply(/*Your Code Here */){
-   /*Your Code Here */
+function multiply(a, b){
+   return a * b;
   }
 
 
@@ -149,16 +166,16 @@ function multiply(/*Your Code Here */){
 💡 NOTE: The string returned must match the format above or the test will not pass!
 */
 
-function greeting(/*Your Code Here */){
-   return /*Your Code Here */
+function greeting(Jalopy, Bungus){
+   return `Hello ${Jalopy} ${Bungus}, nice to meet you!`;
   }
   
   
 // 🦁🦁🦁 Step 3: Check your work by un-commenting the following calls to consume(): 🦁🦁🦁 
 // ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️
-// console.log(consume(2, 2, add)); // 4
-// console.log(consume(10, 16, multiply)); // 160
-// console.log(consume("Mary", "Poppins", greeting)); // Hello Mary Poppins, nice to meet you!
+console.log(consume(2, 2, add)); // 4
+console.log(consume(10, 16, multiply)); // 160
+console.log(consume("Mary", "Poppins", greeting)); // Hello Mary Poppins, nice to meet you!
 
 
 
@@ -168,15 +185,17 @@ function greeting(/*Your Code Here */){
 
 /* 🐴🐴🐴 Step 1: Base Constructor 🐴🐴🐴
  Use CuboidMaker to do the following:
- - Receives a single argument -- an object with the follwoing keys:
+ - Receives a single argument -- an object with the following keys:
   + length
   + width
   + height
 - Instances of CuboidMaker should initialize `length`, `width` and `height` properties
 */
 
-function CuboidMaker(/*Your Code Here */){
-  /*Your Code Here */
+function CuboidMaker(object){
+  this.length = object.length;
+  this.width = object.width;
+  this.height = object.height;
 }
 
 
@@ -184,7 +203,9 @@ function CuboidMaker(/*Your Code Here */){
   Create a method called volume using CuboidMaker's prototype that returns the volume of a given cuboid's length, width, and height
   💡 NOTE: Formula for cuboid volume: length * width * height   
 */
-
+CuboidMaker.prototype.volume = function(){
+  return this.length * this.width * this.height;
+}
 
 
 
@@ -192,7 +213,9 @@ function CuboidMaker(/*Your Code Here */){
   Create another method called surfaceArea using CuboidMaker's prototype that returns the surface area of a given cuboid's length, width, and height. 
   💡 NOTE: Formula for cuboid surface area: 2 * (length * width + length * height + width * height)  
 */
-
+CuboidMaker.prototype.surfaceArea = function(){
+  return 2* (this.length * this.width + this.length * this.height + this.width * this.height);
+}
 
 
 
@@ -213,8 +236,18 @@ function CuboidMaker(/*Your Code Here */){
 // 🦄🦄🦄 Topic 4: Classes 🦄🦄🦄 //
 //Using CuboidMakerTwo, take your prototypes from above and refactor into class syntax. Then, create an object called cuboidTwo that uses the new keyword to use our CuboidMakerTwo class.
  
-class CuboidMakerTwo{
-
+class CuboidMakerTwo{ 
+constructor (object) {
+  this.length = object.length;
+  this.width = object.width;
+  this.height = object.height;
+}
+volume(){
+  return this.length * this.width * this.height;
+}
+surfaceArea(){
+  return 2* (this.length * this.width + this.length * this.height + this.width * this.height);
+}
 }
 
 
